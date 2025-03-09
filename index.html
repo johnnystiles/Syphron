@@ -18,6 +18,7 @@
             </div>
             <div class="nav-links">
                 <a href="#" class="nav-link" data-tab="home">Home</a>
+                <a href="#" class="nav-link" data-tab="mint">Mint SYPH</a>
                 <a href="#" class="nav-link" data-tab="whitepaper">Whitepaper</a>
                 <a href="#" class="nav-link" data-tab="about">About</a>
                 <a href="https://app.syphron.com" class="app-link">Launch App</a>
@@ -38,11 +39,64 @@
             <h1>SYPHRON</h1>
             <p>The next generation DeFi AI autonomous agent. Leveraging cutting-edge technology to maximize your yield through intelligent, adaptive strategies.</p>
             <div>
+                <button class="btn" id="mintBtn">Mint SYPH Tokens</button>
                 <button class="btn" id="whitepaperBtn">Read Whitepaper</button>
-                <button class="btn" id="aboutBtn">Learn More</button>
             </div>
             <a href="https://app.syphron.com" class="launch-app-btn">Launch App</a>
         </section>
+    </div>
+    
+    <div class="tab-content" id="mint">
+        <h2 class="section-title">Mint SYPH Tokens</h2>
+        <div class="mint-container">
+            <div class="token-info">
+                <div class="token-card">
+                    <div class="token-header">
+                        <div class="token-symbol">SYPH</div>
+                        <div class="token-name">Syphron Token</div>
+                    </div>
+                    <div class="token-details">
+                        <div class="token-address">
+                            <span class="label">Contract:</span>
+                            <span class="value">0x7c39859394D27B5A0bF1a4c10035EC1e323f47e5</span>
+                        </div>
+                        <div class="token-exchange">
+                            <span class="label">Exchange Rate:</span>
+                            <span class="value">1 USDC = 1 SYPH</span>
+                        </div>
+                        <div class="token-description">
+                            SYPH is the governance and utility token of the Syphron ecosystem. Token holders can participate in governance decisions, receive a share of protocol revenues, and access premium features.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mint-form">
+                <div class="form-group">
+                    <label for="wallet">Connect Wallet</label>
+                    <button id="wallet" class="btn" style="width: 100%">Connect Wallet</button>
+                </div>
+                <div class="form-group">
+                    <label for="mint-amount">Amount to Mint</label>
+                    <input type="text" id="mint-amount" placeholder="0.0">
+                </div>
+                <div class="form-group">
+                    <div class="exchange-info">
+                        <span>You will spend:</span>
+                        <span id="usdc-amount">0 USDC</span>
+                    </div>
+                    <div class="exchange-info">
+                        <span>You will receive:</span>
+                        <span id="syph-amount">0 SYPH</span>
+                    </div>
+                </div>
+                <button id="mint-btn" class="btn" style="width: 100%" disabled>Mint SYPH Tokens</button>
+                <div class="token-vault">
+                    <span class="label">USDC Vault Address:</span>
+                    <span class="value">0xd8887a899cd3140dA1E7E00Ae0d01df770cb9E53</span>
+                </div>
+            </div>
+        </div>
     </div>
     
     <div class="tab-content" id="whitepaper">
@@ -67,6 +121,7 @@
                 
                 <h3>4. Tokenomics</h3>
                 <p>The SYPH token serves as the governance and utility token of the Syphron ecosystem. Token holders can participate in governance decisions, receive a share of protocol revenues, and access premium features such as customized risk profiles and strategy optimization.</p>
+                <p>SYPH tokens can be minted at a 1:1 ratio with USDC. This mechanism ensures stability and transparency in the token's value proposition. The total supply of SYPH is capped at 100 million tokens.</p>
                 
                 <h3>5. Security Measures</h3>
                 <p>Syphron implements multiple security layers including formal verification of smart contracts, multi-signature transaction approval, circuit breakers for anomalous market conditions, and regular security audits by leading firms in the industry.</p>
@@ -84,29 +139,6 @@
                 <h3>7. Conclusion</h3>
                 <p>Syphron represents a significant advancement in the automation and optimization of DeFi strategies through artificial intelligence. By removing human bias and emotional decision-making from the investment process, Syphron aims to deliver superior risk-adjusted returns for its users while contributing to the overall efficiency of decentralized markets.</p>
             </div>
-        </div>
-    </div>
-    
-    <div class="tab-content" id="deposit">
-        <h2 class="section-title">Deposit</h2>
-        <div class="deposit-form">
-            <div class="form-group">
-                <label for="wallet">Connect Wallet</label>
-                <button id="wallet" class="btn" style="width: 100%">Connect Wallet</button>
-            </div>
-            <div class="form-group">
-                <label for="amount">Amount</label>
-                <input type="text" id="amount" placeholder="0.0">
-            </div>
-            <div class="form-group">
-                <label for="asset">Asset</label>
-                <input type="text" id="asset" placeholder="ETH">
-            </div>
-            <div class="form-group">
-                <label for="strategy">Strategy</label>
-                <input type="text" id="strategy" placeholder="Balanced">
-            </div>
-            <button class="btn" style="width: 100%">Deposit</button>
         </div>
     </div>
     
@@ -321,7 +353,39 @@
     
     <script src="web3-utils.js"></script>
     <script>
-    // Simple website navigation
+    // Contract addresses and ABIs
+    const SYPH_CONTRACT_ADDRESS = '0x7c39859394D27B5A0bF1a4c10035EC1e323f47e5';
+    const USDC_CONTRACT_ADDRESS = '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'; // Ethereum Mainnet USDC
+    const VAULT_ADDRESS = '0xd8887a899cd3140dA1E7E00Ae0d01df770cb9E53';
+    
+    // ERC20 ABI (Minimal for our needs)
+    const ERC20_ABI = [
+        // Read-only functions
+        "function balanceOf(address owner) view returns (uint256)",
+        "function decimals() view returns (uint8)",
+        "function symbol() view returns (string)",
+        
+        // Write functions
+        "function approve(address spender, uint256 amount) returns (bool)",
+        "function transfer(address to, uint256 amount) returns (bool)",
+        
+        // Events
+        "event Transfer(address indexed from, address indexed to, uint256 amount)",
+        "event Approval(address indexed owner, address indexed spender, uint256 amount)"
+    ];
+    
+    // SyphToken ABI
+    const SYPH_ABI = [
+        ...ERC20_ABI,
+        "function mintWithUSDC(uint256 usdcAmount) external",
+        "function calculateMintAmount(uint256 usdcAmount) view returns (uint256)"
+    ];
+    
+    // Global variables
+    let provider, signer, syphContract, usdcContract;
+    let currentAccount = null;
+    
+    // Website navigation and initialization
     document.addEventListener('DOMContentLoaded', function() {
         // Tab navigation
         const navLinks = document.querySelectorAll('.nav-link');
@@ -334,6 +398,13 @@
         });
         
         // Button navigation
+        const mintBtn = document.getElementById('mintBtn');
+        if (mintBtn) {
+            mintBtn.addEventListener('click', function() {
+                changeTab('mint');
+            });
+        }
+        
         const whitepaperBtn = document.getElementById('whitepaperBtn');
         if (whitepaperBtn) {
             whitepaperBtn.addEventListener('click', function() {
@@ -348,8 +419,41 @@
             });
         }
         
+        // Connect wallet button
+        const walletBtn = document.getElementById('wallet');
+        if (walletBtn) {
+            walletBtn.addEventListener('click', connectWallet);
+        }
+        
+        // Mint button
+        const mintTokenBtn = document.getElementById('mint-btn');
+        if (mintTokenBtn) {
+            mintTokenBtn.addEventListener('click', mintTokens);
+        }
+        
+        // Amount input listener for real-time conversion
+        const amountInput = document.getElementById('mint-amount');
+        if (amountInput) {
+            // Make the input container relative for the MAX button
+            amountInput.parentElement.classList.add('input-with-max');
+            
+            // Add MAX button
+            const maxButton = document.createElement('button');
+            maxButton.type = 'button';
+            maxButton.className = 'max-button';
+            maxButton.innerText = 'MAX';
+            maxButton.addEventListener('click', setMaxAmount);
+            amountInput.parentElement.appendChild(maxButton);
+            
+            // Listen for input changes
+            amountInput.addEventListener('input', updateConversionAmount);
+        }
+        
         // Create digital rain effect
         createDigitalRain();
+        
+        // Check if wallet is already connected
+        checkWalletConnection();
     });
     
     // Change tab function
@@ -370,6 +474,383 @@
                 link.classList.remove('active');
             }
         });
+        
+        // If changing to mint tab and wallet is connected, update balances
+        if (tabId === 'mint' && currentAccount) {
+            updateTokenBalances();
+        }
+    }
+    
+    // Connect wallet
+    async function connectWallet() {
+        // Check if MetaMask is available
+        if (typeof window.ethereum === 'undefined') {
+            showNotification('Please install MetaMask to connect your wallet', 'error');
+            return;
+        }
+        
+        try {
+            // Update button state
+            const walletBtn = document.getElementById('wallet');
+            walletBtn.innerHTML = 'Connecting...';
+            
+            // Connect to provider
+            provider = new ethers.providers.Web3Provider(window.ethereum);
+            
+            // Request account access
+            const accounts = await provider.send("eth_requestAccounts", []);
+            signer = provider.getSigner();
+            currentAccount = accounts[0];
+            
+            // Initialize contracts
+            syphContract = new ethers.Contract(SYPH_CONTRACT_ADDRESS, SYPH_ABI, signer);
+            usdcContract = new ethers.Contract(USDC_CONTRACT_ADDRESS, ERC20_ABI, signer);
+            
+            // Update UI
+            updateWalletUI();
+            
+            // Setup event listeners for wallet changes
+            window.ethereum.on('accountsChanged', handleAccountsChanged);
+            window.ethereum.on('chainChanged', handleChainChanged);
+            
+            return currentAccount;
+        } catch (error) {
+            console.error('Error connecting wallet:', error);
+            const walletBtn = document.getElementById('wallet');
+            walletBtn.innerHTML = 'Connect Wallet';
+            showNotification('Failed to connect wallet: ' + error.message, 'error');
+        }
+    }
+    
+    // Check if wallet is connected on page load
+    async function checkWalletConnection() {
+        if (typeof window.ethereum !== 'undefined') {
+            try {
+                provider = new ethers.providers.Web3Provider(window.ethereum);
+                const accounts = await provider.listAccounts();
+                
+                if (accounts.length > 0) {
+                    signer = provider.getSigner();
+                    currentAccount = accounts[0];
+                    
+                    // Initialize contracts
+                    syphContract = new ethers.Contract(SYPH_CONTRACT_ADDRESS, SYPH_ABI, signer);
+                    usdcContract = new ethers.Contract(USDC_CONTRACT_ADDRESS, ERC20_ABI, signer);
+                    
+                    // Update UI
+                    updateWalletUI();
+                    
+                    // Setup event listeners for wallet changes
+                    window.ethereum.on('accountsChanged', handleAccountsChanged);
+                    window.ethereum.on('chainChanged', handleChainChanged);
+                }
+            } catch (error) {
+                console.error('Error checking wallet connection:', error);
+            }
+        }
+    }
+    
+    // Update wallet UI
+    async function updateWalletUI() {
+        if (!currentAccount) return;
+        
+        // Update connect button
+        const walletBtn = document.getElementById('wallet');
+        if (walletBtn) {
+            walletBtn.innerHTML = 'Wallet Connected';
+            walletBtn.classList.add('connected');
+        }
+        
+        // Get network info
+        const network = await provider.getNetwork();
+        const networkName = getNetworkName(network.chainId);
+        
+        // Show wallet info
+        showWalletInfo(currentAccount, networkName);
+        
+        // Enable mint button
+        const mintBtn = document.getElementById('mint-btn');
+        if (mintBtn) {
+            mintBtn.disabled = false;
+            mintBtn.innerHTML = 'Mint SYPH Tokens';
+        }
+        
+        // Update token balances
+        updateTokenBalances();
+    }
+    
+    // Show wallet info
+    function showWalletInfo(account, networkName) {
+        // Get the container or create it
+        let walletInfo = document.querySelector('.wallet-info');
+        
+        if (!walletInfo) {
+            walletInfo = document.createElement('div');
+            walletInfo.className = 'wallet-info';
+            
+            // Get the wallet button's parent
+            const walletBtn = document.getElementById('wallet');
+            walletBtn.parentNode.appendChild(walletInfo);
+        }
+        
+        // Update the content
+        walletInfo.innerHTML = `
+            <div class="wallet-address">${formatAddress(account)}</div>
+            <div class="wallet-network">${networkName}</div>
+            <div class="wallet-tokens">
+                <div class="wallet-token-balance">
+                    <span class="wallet-token-name">USDC</span>
+                    <span class="wallet-token-amount" id="usdc-balance">Loading...</span>
+                </div>
+                <div class="wallet-token-balance">
+                    <span class="wallet-token-name">SYPH</span>
+                    <span class="wallet-token-amount" id="syph-balance">Loading...</span>
+                </div>
+            </div>
+            <button class="wallet-disconnect" id="disconnect-btn">Disconnect</button>
+        `;
+        
+        walletInfo.style.display = 'block';
+        
+        // Add disconnect event
+        document.getElementById('disconnect-btn').addEventListener('click', disconnectWallet);
+    }
+    
+    // Update token balances
+    async function updateTokenBalances() {
+        if (!currentAccount || !provider) return;
+        
+        try {
+            // Get USDC balance
+            const usdcBalance = await usdcContract.balanceOf(currentAccount);
+            const usdcDecimals = await usdcContract.decimals();
+            const formattedUsdcBalance = ethers.utils.formatUnits(usdcBalance, usdcDecimals);
+            
+            // Get SYPH balance
+            const syphBalance = await syphContract.balanceOf(currentAccount);
+            const formattedSyphBalance = ethers.utils.formatUnits(syphBalance, 18);
+            
+            // Update UI
+            const usdcBalanceEl = document.getElementById('usdc-balance');
+            const syphBalanceEl = document.getElementById('syph-balance');
+            
+            if (usdcBalanceEl) usdcBalanceEl.textContent = parseFloat(formattedUsdcBalance).toFixed(2);
+            if (syphBalanceEl) syphBalanceEl.textContent = parseFloat(formattedSyphBalance).toFixed(2);
+            
+            // Store balance for max button
+            window.usdcBalance = formattedUsdcBalance;
+        } catch (error) {
+            console.error('Error updating token balances:', error);
+        }
+    }
+    
+    // Disconnect wallet
+    function disconnectWallet() {
+        // Reset state
+        currentAccount = null;
+        provider = null;
+        signer = null;
+        syphContract = null;
+        usdcContract = null;
+        
+        // Update UI
+        const walletBtn = document.getElementById('wallet');
+        if (walletBtn) {
+            walletBtn.innerHTML = 'Connect Wallet';
+            walletBtn.classList.remove('connected');
+        }
+        
+        // Hide wallet info
+        const walletInfo = document.querySelector('.wallet-info');
+        if (walletInfo) {
+            walletInfo.style.display = 'none';
+        }
+        
+        // Disable mint button
+        const mintBtn = document.getElementById('mint-btn');
+        if (mintBtn) {
+            mintBtn.disabled = true;
+            mintBtn.innerHTML = 'Connect Wallet First';
+        }
+        
+        console.log('Wallet disconnected');
+    }
+    
+    // Handle accounts changed
+    function handleAccountsChanged(accounts) {
+        if (accounts.length === 0) {
+            // User disconnected
+            disconnectWallet();
+        } else if (accounts[0] !== currentAccount) {
+            // Account changed
+            currentAccount = accounts[0];
+            updateWalletUI();
+        }
+    }
+    
+    // Handle chain changed
+    function handleChainChanged(chainId) {
+        // Recommended by MetaMask to reload the page on chain change
+        window.location.reload();
+    }
+    
+    // Get network name from chain ID
+    function getNetworkName(chainId) {
+        const networks = {
+            1: 'Ethereum Mainnet',
+            5: 'Goerli Testnet',
+            11155111: 'Sepolia Testnet',
+            137: 'Polygon Mainnet',
+            80001: 'Mumbai Testnet',
+            56: 'BSC Mainnet',
+            97: 'BSC Testnet',
+            42161: 'Arbitrum One',
+            421613: 'Arbitrum Goerli',
+            10: 'Optimism',
+            420: 'Optimism Goerli',
+            43114: 'Avalanche C-Chain',
+            43113: 'Avalanche Fuji',
+        };
+        
+        return networks[chainId] || `Chain ${chainId}`;
+    }
+    
+    // Format address for display
+    function formatAddress(address) {
+        return `${address.substring(0, 6)}...${address.substring(address.length - 4)}`;
+    }
+    
+    // Update conversion amount based on input
+    async function updateConversionAmount() {
+        const amountInput = document.getElementById('mint-amount');
+        const usdcAmountEl = document.getElementById('usdc-amount');
+        const syphAmountEl = document.getElementById('syph-amount');
+        
+        if (!amountInput || !usdcAmountEl || !syphAmountEl) return;
+        
+        const amount = amountInput.value.trim();
+        
+        if (!amount || isNaN(parseFloat(amount)) || parseFloat(amount) <= 0) {
+            usdcAmountEl.textContent = '0 USDC';
+            syphAmountEl.textContent = '0 SYPH';
+            return;
+        }
+        
+        // Convert amount
+        const usdcAmount = amount;
+        const syphAmount = amount; // 1:1 exchange rate
+        
+        usdcAmountEl.textContent = `${parseFloat(usdcAmount).toFixed(2)} USDC`;
+        syphAmountEl.textContent = `${parseFloat(syphAmount).toFixed(2)} SYPH`;
+    }
+    
+    // Set max amount based on USDC balance
+    function setMaxAmount() {
+        if (!window.usdcBalance) return;
+        
+        const amountInput = document.getElementById('mint-amount');
+        if (amountInput) {
+            // Use slightly less than max to account for gas
+            const maxAmount = Math.max(0, parseFloat(window.usdcBalance) - 0.01).toFixed(6);
+            amountInput.value = maxAmount;
+            updateConversionAmount();
+        }
+    }
+    
+    // Mint SYPH tokens
+    async function mintTokens() {
+        if (!currentAccount || !signer) {
+            showNotification('Please connect your wallet first', 'error');
+            return;
+        }
+        
+        const amountInput = document.getElementById('mint-amount');
+        if (!amountInput) return;
+        
+        const amount = amountInput.value.trim();
+        
+        if (!amount || isNaN(parseFloat(amount)) || parseFloat(amount) <= 0) {
+            showNotification('Please enter a valid amount', 'error');
+            return;
+        }
+        
+        try {
+            // Show loading notification
+            showNotification('Processing transaction...', 'loading');
+            
+            // Get the amount with proper decimals
+            const usdcDecimals = await usdcContract.decimals();
+            const usdcAmount = ethers.utils.parseUnits(amount, usdcDecimals);
+            
+            // First approve USDC spending
+            const approveTx = await usdcContract.approve(SYPH_CONTRACT_ADDRESS, usdcAmount);
+            
+            // Show approval notification
+            showNotification('Approving USDC transfer...', 'loading');
+            
+            // Wait for approval confirmation
+            await approveTx.wait();
+            
+            // Now mint tokens
+            showNotification('Minting SYPH tokens...', 'loading');
+            
+            const mintTx = await syphContract.mintWithUSDC(usdcAmount);
+            
+            // Wait for mint confirmation
+            await mintTx.wait();
+            
+            // Success!
+            showNotification(`Successfully minted ${parseFloat(amount).toFixed(2)} SYPH tokens!`, 'success');
+            
+            // Update balances
+            updateTokenBalances();
+            
+            // Clear input
+            amountInput.value = '';
+            updateConversionAmount();
+            
+        } catch (error) {
+            console.error('Minting error:', error);
+            showNotification(`Transaction failed: ${error.message}`, 'error');
+        }
+    }
+    
+    // Show notification
+    function showNotification(message, type) {
+        // Find or create notification element
+        let notification = document.querySelector('.notification');
+        if (!notification) {
+            notification = document.createElement('div');
+            notification.className = 'notification';
+            
+            // Add to mint form
+            const mintForm = document.querySelector('.mint-form');
+            if (mintForm) {
+                mintForm.appendChild(notification);
+            }
+        }
+        
+        // Update notification content
+        notification.className = `notification ${type}`;
+        
+        if (type === 'loading') {
+            notification.innerHTML = `<span class="notification-spinner"></span> ${message}`;
+        } else {
+            notification.textContent = message;
+        }
+        
+        notification.style.display = 'block';
+        
+        // Auto-hide for success and error
+        if (type !== 'loading') {
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                setTimeout(() => {
+                    notification.style.display = 'none';
+                    notification.style.opacity = '1';
+                }, 300);
+            }, 5000);
+        }
     }
     
     // Digital rain effect
