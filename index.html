@@ -87,7 +87,7 @@
         <div class="deposit-form">
             <div class="form-group">
                 <label for="wallet">Connect Wallet</label>
-                <button class="btn" style="width: 100%">Connect Wallet</button>
+                <button id="wallet" class="btn" style="width: 100%">Connect Wallet</button>
             </div>
             <div class="form-group">
                 <label for="amount">Amount</label>
@@ -157,6 +157,9 @@
         </div>
     </footer>
     
+    <script src="web3-utils.js"></script>
+    <script src="wallet.js"></script>
+    <script src="deposit.js"></script>
     <script src="script.js"></script>
     <!-- Add descriptive titles to each section -->
     <script>
@@ -182,6 +185,13 @@
                 whitepaperBtn.addEventListener('click', function() {
                     changeTab('whitepaper');
                 });
+            }
+            
+            // Load Web3 libraries if they're needed
+            if (typeof Web3 === 'undefined' && 
+                typeof window.ethereum === 'undefined' && 
+                typeof window.WalletConnectProvider === 'undefined') {
+                loadWeb3Libraries();
             }
         });
     </script>
