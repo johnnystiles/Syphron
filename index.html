@@ -5,6 +5,165 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SYPHRON - DeFi AI Autonomous Agent</title>
     <link rel="stylesheet" href="styles.css">
+    <!-- Add Web3 library -->
+    <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js" type="application/javascript"></script>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <span class="glitch-effect" data-text="SYPHRON">SYPHRON</span>
+            </div>
+            <div class="nav-links">
+                <a href="#" class="nav-link" data-tab="home">Home</a>
+                <a href="#" class="nav-link" data-tab="whitepaper">Whitepaper</a>
+                <a href="#" class="nav-link" data-tab="deposit">Deposit</a>
+                <a href="#" class="nav-link" data-tab="about">About</a>
+            </div>
+        </nav>
+    </header>
+    
+    <div class="circuit-lines">
+        <div class="circuit-line"></div>
+        <div class="circuit-line"></div>
+        <div class="circuit-line"></div>
+    </div>
+    
+    <div class="digital-rain" id="digitalRain"></div>
+    
+    <div class="tab-content active-tab" id="home">
+        <section class="hero">
+            <h1>SYPHRON</h1>
+            <p>The next generation DeFi AI autonomous agent. Leveraging cutting-edge technology to maximize your yield through intelligent, adaptive strategies.</p>
+            <div>
+                <button class="btn" id="depositBtn">Start Investing</button>
+                <button class="btn" id="whitepaperBtn">Read Whitepaper</button>
+            </div>
+        </section>
+    </div>
+    
+    <div class="tab-content" id="whitepaper">
+        <h2 class="section-title">Whitepaper</h2>
+        <div class="whitepaper">
+            <div class="whitepaper-content">
+                <h3>1. Abstract</h3>
+                <p>Syphron represents a paradigm shift in decentralized finance by introducing an autonomous AI agent capable of analyzing market conditions, predicting yield opportunities, and automatically deploying capital to maximize returns while maintaining optimal risk parameters.</p>
+                
+                <h3>2. Introduction</h3>
+                <p>The DeFi landscape presents unprecedented opportunities for capital deployment across various protocols and strategies. However, the complexity, volatility, and rapid evolution of these systems make it challenging for individual investors to optimize their positions. Syphron addresses this problem through an AI-driven autonomous agent that continuously monitors the DeFi ecosystem to identify optimal yield strategies.</p>
+                
+                <h3>3. Technology</h3>
+                <p>Syphron utilizes a multi-layered neural network architecture with specialized modules for:</p>
+                <ul>
+                    <li>Real-time data aggregation from on-chain and off-chain sources</li>
+                    <li>Predictive analysis of market trends and yield fluctuations</li>
+                    <li>Risk assessment through advanced stochastic modeling</li>
+                    <li>Automated strategy execution via smart contract integration</li>
+                    <li>Self-improvement through reinforcement learning mechanisms</li>
+                </ul>
+                
+                <h3>4. Tokenomics</h3>
+                <p>The SYPH token serves as the governance and utility token of the Syphron ecosystem. Token holders can participate in governance decisions, receive a share of protocol revenues, and access premium features such as customized risk profiles and strategy optimization.</p>
+                
+                <h3>5. Security Measures</h3>
+                <p>Syphron implements multiple security layers including formal verification of smart contracts, multi-signature transaction approval, circuit breakers for anomalous market conditions, and regular security audits by leading firms in the industry.</p>
+                
+                <h3>6. Roadmap</h3>
+                <p>The development and deployment of Syphron will proceed through several phases:</p>
+                <ul>
+                    <li>Phase 1: Beta release with limited asset support and basic strategies</li>
+                    <li>Phase 2: Expansion to multiple chains and DeFi protocols</li>
+                    <li>Phase 3: Advanced strategy development including leveraged positions</li>
+                    <li>Phase 4: Introduction of cross-chain liquidity optimization</li>
+                    <li>Phase 5: Full decentralization of governance and operations</li>
+                </ul>
+                
+                <h3>7. Conclusion</h3>
+                <p>Syphron represents a significant advancement in the automation and optimization of DeFi strategies through artificial intelligence. By removing human bias and emotional decision-making from the investment process, Syphron aims to deliver superior risk-adjusted returns for its users while contributing to the overall efficiency of decentralized markets.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="tab-content" id="deposit">
+        <h2 class="section-title">Deposit</h2>
+        <div class="deposit-form">
+            <div class="form-group">
+                <label for="wallet">Connect Wallet</label>
+                <button id="wallet" class="btn" style="width: 100%">Connect Wallet</button>
+            </div>
+            <div class="form-group">
+                <label for="amount">Amount</label>
+                <input type="text" id="amount" placeholder="0.0">
+            </div>
+            <div class="form-group">
+                <label for="asset">Asset</label>
+                <input type="text" id="asset" placeholder="ETH">
+            </div>
+            <div class="form-group">
+                <label for="strategy">Strategy</label>
+                <input type="text" id="strategy" placeholder="Balanced">
+            </div>
+            <button class="btn" style="width: 100%">Deposit</button>
+        </div>
+    </div>
+    
+    <div class="tab-content" id="about">
+        <h2 class="section-title">About Syphron</h2>
+        <p>Syphron is revolutionizing DeFi by combining cutting-edge AI with blockchain technology to create an autonomous agent that optimizes yield strategies in real-time.</p>
+        
+        <div class="about-grid">
+            <div class="about-card">
+                <div class="icon">🤖</div>
+                <h3>AI-Powered</h3>
+                <p>Utilizing advanced machine learning algorithms to analyze market conditions and predict optimal yield opportunities across the DeFi ecosystem.</p>
+            </div>
+            
+            <div class="about-card">
+                <div class="icon">🔒</div>
+                <h3>Secure</h3>
+                <p>Multiple layers of security including smart contract audits, formal verification, and multi-signature approvals to ensure your assets remain safe.</p>
+            </div>
+            
+            <div class="about-card">
+                <div class="icon">📈</div>
+                <h3>Adaptive</h3>
+                <p>Continuously evolving strategies that adjust to changing market conditions and new opportunities in the rapidly evolving DeFi landscape.</p>
+            </div>
+            
+            <div class="about-card">
+                <div class="icon">⚡</div>
+                <h3>Efficient</h3>
+                <p>Optimizing gas costs, minimizing slippage, and maximizing capital efficiency to deliver superior risk-adjusted returns.</p>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#">Terms</a>
+                <a href="#">Privacy</a>
+                <a href="#">Docs</a>
+                <a href="#">FAQ</a>
+                <a href="#">Contact</a>
+            </div>
+            <div class="social-links">
+                <a href="#">🐦</a>
+                <a href="#">📱</a>
+                <a href="#">🌐</a>
+                <a href="#">📝</a>
+            </div>
+            <div class="copyright">
+                &copy; 2025 Syphron. All rights reserved.
+            </div>
+        </div>
+    </footer><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYPHRON - DeFi AI Autonomous Agent</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
@@ -161,39 +320,597 @@
     <script src="wallet.js"></script>
     <script src="deposit.js"></script>
     <script src="script.js"></script>
-    <!-- Add descriptive titles to each section -->
     <script>
-        // Make sure DOM is loaded before executing this code
-        document.addEventListener('DOMContentLoaded', function() {
-            // Remove any existing onclick attributes to prevent conflicts with event listeners
-            document.querySelectorAll('.btn').forEach(button => {
-                if (button.hasAttribute('onclick')) {
-                    button.removeAttribute('onclick');
-                }
+    // Simple wallet integration with direct MetaMask connection
+    document.addEventListener('DOMContentLoaded', function() {
+        // Main wallet connect button
+        const walletBtn = document.getElementById('wallet');
+        if (walletBtn) {
+            walletBtn.addEventListener('click', connectMetaMask);
+        }
+        
+        // Main deposit button 
+        const depositButton = document.querySelector('.deposit-form .btn:last-child');
+        if (depositButton) {
+            depositButton.addEventListener('click', handleDeposit);
+        }
+        
+        // Navigation buttons
+        const depositBtn = document.getElementById('depositBtn');
+        const whitepaperBtn = document.getElementById('whitepaperBtn');
+        
+        if (depositBtn) {
+            depositBtn.addEventListener('click', function() {
+                changeTab('deposit');
             });
-            
-            // Add event listeners to the specific buttons on the home page
-            const depositBtn = document.querySelector('.hero .btn:first-child');
-            if (depositBtn) {
-                depositBtn.addEventListener('click', function() {
-                    changeTab('deposit');
-                });
-            }
-            
-            const whitepaperBtn = document.querySelector('.hero .btn:last-child');
-            if (whitepaperBtn) {
-                whitepaperBtn.addEventListener('click', function() {
-                    changeTab('whitepaper');
-                });
-            }
-            
-            // Load Web3 libraries if they're needed
-            if (typeof Web3 === 'undefined' && 
-                typeof window.ethereum === 'undefined' && 
-                typeof window.WalletConnectProvider === 'undefined') {
-                loadWeb3Libraries();
+        }
+        
+        if (whitepaperBtn) {
+            whitepaperBtn.addEventListener('click', function() {
+                changeTab('whitepaper');
+            });
+        }
+        
+        // Check if already connected
+        checkConnection();
+    });
+    
+    // Simple tab navigation
+    function changeTab(tabId) {
+        const tabs = document.querySelectorAll('.tab-content');
+        tabs.forEach(tab => {
+            tab.classList.remove('active-tab');
+        });
+        
+        document.getElementById(tabId).classList.add('active-tab');
+        
+        // Update active link
+        const links = document.querySelectorAll('.nav-link');
+        links.forEach(link => {
+            if (link.getAttribute('data-tab') === tabId) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
             }
         });
+    }
+    
+    // Connect to MetaMask
+    async function connectMetaMask() {
+        // Check if MetaMask is installed
+        if (typeof window.ethereum === 'undefined') {
+            alert('MetaMask is not installed. Please install MetaMask to connect your wallet.');
+            return;
+        }
+        
+        const walletBtn = document.getElementById('wallet');
+        
+        try {
+            // Show connecting state
+            walletBtn.innerHTML = 'Connecting...';
+            
+            // Request accounts
+            const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+            const account = accounts[0];
+            
+            // Get network
+            const chainId = await ethereum.request({ method: 'eth_chainId' });
+            const networkName = getNetworkName(chainId);
+            
+            // Update UI
+            walletBtn.innerHTML = 'Wallet Connected';
+            walletBtn.classList.add('connected');
+            
+            // Create wallet info
+            showWalletInfo(account, networkName);
+            
+            // Enable deposit button
+            const depositButton = document.querySelector('.deposit-form .btn:last-child');
+            if (depositButton) {
+                depositButton.disabled = false;
+                depositButton.innerHTML = 'Deposit';
+            }
+            
+            // Add event listeners
+            ethereum.on('accountsChanged', handleAccountsChanged);
+            ethereum.on('chainChanged', handleChainChanged);
+            
+            // Show asset balance if on deposit page
+            if (document.getElementById('deposit').classList.contains('active-tab')) {
+                addBalanceDisplay(account);
+            }
+            
+            console.log(`Connected with: ${account} on ${networkName}`);
+            return account;
+            
+        } catch (error) {
+            console.error('Connection error:', error);
+            walletBtn.innerHTML = 'Connect Wallet';
+            alert(`Failed to connect: ${error.message}`);
+        }
+    }
+    
+    // Check if already connected
+    async function checkConnection() {
+        if (typeof window.ethereum === 'undefined') return;
+        
+        try {
+            // Get accounts without prompting
+            const accounts = await ethereum.request({ method: 'eth_accounts' });
+            if (accounts.length > 0) {
+                const chainId = await ethereum.request({ method: 'eth_chainId' });
+                const networkName = getNetworkName(chainId);
+                
+                // Update UI
+                const walletBtn = document.getElementById('wallet');
+                if (walletBtn) {
+                    walletBtn.innerHTML = 'Wallet Connected';
+                    walletBtn.classList.add('connected');
+                }
+                
+                // Show wallet info
+                showWalletInfo(accounts[0], networkName);
+                
+                // Enable deposit button
+                const depositButton = document.querySelector('.deposit-form .btn:last-child');
+                if (depositButton) {
+                    depositButton.disabled = false;
+                    depositButton.innerHTML = 'Deposit';
+                }
+                
+                // Add event listeners
+                ethereum.on('accountsChanged', handleAccountsChanged);
+                ethereum.on('chainChanged', handleChainChanged);
+                
+                // Show asset balance if on deposit page
+                if (document.getElementById('deposit').classList.contains('active-tab')) {
+                    addBalanceDisplay(accounts[0]);
+                }
+            }
+        } catch (error) {
+            console.error('Error checking connection:', error);
+        }
+    }
+    
+    // Get network name
+    function getNetworkName(chainId) {
+        const networks = {
+            '0x1': 'Ethereum Mainnet',
+            '0x5': 'Goerli Testnet',
+            '0x89': 'Polygon',
+            '0x38': 'Binance Smart Chain',
+            '0xa86a': 'Avalanche',
+            '0xa4b1': 'Arbitrum One'
+        };
+        
+        return networks[chainId] || `Chain ID: ${chainId}`;
+    }
+    
+    // Handle account changes
+    function handleAccountsChanged(accounts) {
+        if (accounts.length === 0) {
+            // User disconnected
+            const walletBtn = document.getElementById('wallet');
+            if (walletBtn) {
+                walletBtn.innerHTML = 'Connect Wallet';
+                walletBtn.classList.remove('connected');
+            }
+            
+            // Hide wallet info
+            const walletInfo = document.getElementById('walletInfo');
+            if (walletInfo) walletInfo.remove();
+            
+            // Disable deposit button
+            const depositButton = document.querySelector('.deposit-form .btn:last-child');
+            if (depositButton) {
+                depositButton.disabled = true;
+                depositButton.innerHTML = 'Connect Wallet First';
+            }
+            
+            console.log('Wallet disconnected');
+        } else {
+            // Account changed
+            ethereum.request({ method: 'eth_chainId' }).then(chainId => {
+                showWalletInfo(accounts[0], getNetworkName(chainId));
+                
+                // Update balance display if on deposit page
+                if (document.getElementById('deposit').classList.contains('active-tab')) {
+                    addBalanceDisplay(accounts[0]);
+                }
+            });
+        }
+    }
+    
+    // Handle chain changes
+    function handleChainChanged(chainId) {
+        // Get current account
+        ethereum.request({ method: 'eth_accounts' }).then(accounts => {
+            if (accounts.length > 0) {
+                showWalletInfo(accounts[0], getNetworkName(chainId));
+                
+                // Update balance display if on deposit page
+                if (document.getElementById('deposit').classList.contains('active-tab')) {
+                    addBalanceDisplay(accounts[0]);
+                }
+            }
+        });
+        
+        console.log(`Chain changed to: ${getNetworkName(chainId)}`);
+    }
+    
+    // Show wallet info
+    function showWalletInfo(account, networkName) {
+        // Remove existing wallet info
+        const existingWalletInfo = document.getElementById('walletInfo');
+        if (existingWalletInfo) existingWalletInfo.remove();
+        
+        // Create wallet info element
+        const walletInfo = document.createElement('div');
+        walletInfo.id = 'walletInfo';
+        walletInfo.className = 'wallet-info';
+        walletInfo.innerHTML = `
+            <div class="wallet-address">${account.substring(0, 6)}...${account.substring(account.length - 4)}</div>
+            <div class="wallet-network">${networkName}</div>
+            <button id="disconnectBtn" class="wallet-disconnect">Disconnect</button>
+        `;
+        
+        // Add wallet info after connect button
+        const walletBtn = document.getElementById('wallet');
+        walletBtn.parentNode.appendChild(walletInfo);
+        
+        // Add style if not already added
+        if (!document.getElementById('wallet-style')) {
+            const style = document.createElement('style');
+            style.id = 'wallet-style';
+            style.textContent = `
+                .wallet-info {
+                    margin-top: 10px;
+                    padding: 10px;
+                    background-color: rgba(2, 48, 32, 0.7);
+                    border: 1px solid var(--neon-green);
+                    border-radius: 5px;
+                }
+                
+                .wallet-address {
+                    color: var(--neon-yellow);
+                    font-family: monospace;
+                    letter-spacing: 1px;
+                }
+                
+                .wallet-network {
+                    font-size: 0.8rem;
+                    margin-top: 5px;
+                }
+                
+                .wallet-disconnect {
+                    background: none;
+                    border: none;
+                    color: var(--neon-green);
+                    padding: 0;
+                    margin-top: 8px;
+                    cursor: pointer;
+                    text-decoration: underline;
+                    font-size: 0.9rem;
+                }
+                
+                .wallet-disconnect:hover {
+                    color: var(--neon-yellow);
+                }
+                
+                .wallet-balance {
+                    margin-top: 5px;
+                    font-size: 0.9rem;
+                    text-align: right;
+                }
+                
+                .max-button {
+                    position: absolute;
+                    right: 10px;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    background: none;
+                    border: none;
+                    color: var(--neon-yellow);
+                    cursor: pointer;
+                    font-size: 0.8rem;
+                    z-index: 2;
+                }
+                
+                .max-button:hover {
+                    text-decoration: underline;
+                }
+                
+                .deposit-notification {
+                    margin-top: 15px;
+                    padding: 12px;
+                    border-radius: 5px;
+                    text-align: center;
+                }
+                
+                .deposit-success {
+                    background-color: rgba(0, 255, 128, 0.2);
+                    border: 1px solid var(--neon-green);
+                }
+                
+                .deposit-error {
+                    background-color: rgba(255, 51, 102, 0.2);
+                    border: 1px solid #ff3366;
+                    color: #ff6688;
+                }
+                
+                .deposit-loading {
+                    background-color: rgba(212, 255, 0, 0.2);
+                    border: 1px solid var(--neon-yellow);
+                }
+                
+                .btn.connected {
+                    background: var(--neon-green);
+                    color: var(--darker-green);
+                }
+            `;
+            document.head.appendChild(style);
+        }
+        
+        // Add disconnect event
+        document.getElementById('disconnectBtn').addEventListener('click', () => {
+            // Remove wallet info
+            walletInfo.remove();
+            
+            // Update button
+            const walletBtn = document.getElementById('wallet');
+            walletBtn.innerHTML = 'Connect Wallet';
+            walletBtn.classList.remove('connected');
+            
+            // Disable deposit button
+            const depositButton = document.querySelector('.deposit-form .btn:last-child');
+            if (depositButton) {
+                depositButton.disabled = true;
+                depositButton.innerHTML = 'Connect Wallet First';
+            }
+            
+            console.log('Wallet disconnected from UI');
+        });
+    }
+    
+    // Add balance display to amount input
+    async function addBalanceDisplay(account) {
+        const amountInput = document.getElementById('amount');
+        const assetSelect = document.getElementById('asset');
+        
+        if (!amountInput || !account) return;
+        
+        try {
+            // Get ETH balance
+            const balanceWei = await ethereum.request({
+                method: 'eth_getBalance',
+                params: [account, 'latest']
+            });
+            
+            // Convert to ETH
+            const balanceETH = parseInt(balanceWei, 16) / 1e18;
+            
+            // Create balance display
+            let balanceDisplay = document.querySelector('.wallet-balance');
+            if (!balanceDisplay) {
+                balanceDisplay = document.createElement('div');
+                balanceDisplay.className = 'wallet-balance';
+                amountInput.parentNode.appendChild(balanceDisplay);
+            }
+            
+            // Update display
+            balanceDisplay.textContent = `Balance: ${balanceETH.toFixed(4)} ETH`;
+            
+            // Position the input container for the max button
+            amountInput.parentElement.style.position = 'relative';
+            
+            // Add MAX button for ETH
+            let maxButton = document.querySelector('.max-button');
+            if (!maxButton) {
+                maxButton = document.createElement('button');
+                maxButton.type = 'button';
+                maxButton.className = 'max-button';
+                maxButton.innerHTML = 'MAX';
+                
+                maxButton.addEventListener('click', () => {
+                    // Leave some ETH for gas
+                    const maxAmount = Math.max(0, balanceETH - 0.01).toFixed(4);
+                    amountInput.value = maxAmount;
+                });
+                
+                amountInput.parentElement.appendChild(maxButton);
+            }
+            
+        } catch (error) {
+            console.error('Error getting balance:', error);
+        }
+    }
+    
+    // Convert text inputs to selects
+    document.addEventListener('DOMContentLoaded', function() {
+        // Asset select
+        const assetInput = document.getElementById('asset');
+        if (assetInput && assetInput.tagName.toLowerCase() === 'input') {
+            const assetSelect = document.createElement('select');
+            assetSelect.id = 'asset';
+            assetSelect.innerHTML = `
+                <option value="">Select Asset</option>
+                <option value="ETH" selected>ETH</option>
+                <option value="USDC">USDC</option>
+                <option value="USDT">USDT</option>
+                <option value="DAI">DAI</option>
+                <option value="WBTC">WBTC</option>
+            `;
+            assetInput.parentNode.replaceChild(assetSelect, assetInput);
+        }
+        
+        // Strategy select
+        const strategyInput = document.getElementById('strategy');
+        if (strategyInput && strategyInput.tagName.toLowerCase() === 'input') {
+            const strategySelect = document.createElement('select');
+            strategySelect.id = 'strategy';
+            strategySelect.innerHTML = `
+                <option value="">Select Strategy</option>
+                <option value="Balanced" selected>Balanced</option>
+                <option value="Conservative">Conservative</option>
+                <option value="Aggressive">Aggressive</option>
+                <option value="YieldFarming">Yield Farming</option>
+                <option value="LiquidityProvision">Liquidity Provision</option>
+            `;
+            strategyInput.parentNode.replaceChild(strategySelect, strategyInput);
+        }
+        
+        // Style selects
+        const style = document.createElement('style');
+        style.textContent = `
+            .form-group select {
+                width: 100%;
+                padding: 12px;
+                background-color: rgba(1, 26, 18, 0.8);
+                border: 1px solid var(--neon-green);
+                border-radius: 5px;
+                color: var(--text-color);
+                font-size: 1rem;
+                transition: all 0.3s ease;
+                appearance: none;
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2300ff80' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+                background-repeat: no-repeat;
+                background-position: right 10px center;
+            }
+            
+            .form-group select:focus {
+                outline: none;
+                border-color: var(--neon-yellow);
+                box-shadow: 0 0 10px var(--neon-yellow);
+            }
+        `;
+        document.head.appendChild(style);
+    });
+    
+    // Handle deposit
+    async function handleDeposit(e) {
+        e.preventDefault();
+        
+        // Check if wallet is connected
+        if (typeof window.ethereum === 'undefined' || !(await ethereum.request({ method: 'eth_accounts' })).length) {
+            alert('Please connect your wallet first');
+            return;
+        }
+        
+        // Get values
+        const amount = document.getElementById('amount').value.trim();
+        const asset = document.getElementById('asset').value;
+        const strategy = document.getElementById('strategy').value;
+        
+        // Validate
+        if (!amount || isNaN(parseFloat(amount)) || parseFloat(amount) <= 0) {
+            showNotification('Please enter a valid amount', 'error');
+            return;
+        }
+        
+        if (!asset) {
+            showNotification('Please select an asset', 'error');
+            return;
+        }
+        
+        if (!strategy) {
+            showNotification('Please select a strategy', 'error');
+            return;
+        }
+        
+        try {
+            // Show loading
+            showNotification('Processing transaction...', 'loading');
+            
+            // Get account
+            const accounts = await ethereum.request({ method: 'eth_accounts' });
+            if (!accounts.length) {
+                showNotification('Wallet disconnected', 'error');
+                return;
+            }
+            
+            // For demonstration: mock contract address
+            const contractAddress = '0x71C7656EC7ab88b098defB751B7401B5f6d8976F';
+            
+            // If ETH, send transaction
+            if (asset === 'ETH') {
+                // Convert amount to wei
+                const amountWei = `0x${(parseFloat(amount) * 1e18).toString(16)}`;
+                
+                // Create transaction
+                const txHash = await ethereum.request({
+                    method: 'eth_sendTransaction',
+                    params: [{
+                        from: accounts[0],
+                        to: contractAddress,
+                        value: amountWei,
+                        // For real contract, add function call data here
+                    }]
+                });
+                
+                // Show success
+                showNotification(
+                    `Successfully deposited ${amount} ETH with ${strategy} strategy!<br>
+                    <a href="https://etherscan.io/tx/${txHash}" target="_blank" style="color:inherit;">
+                        View transaction
+                    </a>`,
+                    'success'
+                );
+                
+                // Reset form
+                document.getElementById('amount').value = '';
+            } else {
+                // For tokens, normally we'd need to approve and call contract
+                // For demo, simulate success after delay
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                // Show success
+                const mockTxHash = '0x' + Array.from({length: 64}, () => 
+                    Math.floor(Math.random() * 16).toString(16)).join('');
+                
+                showNotification(
+                    `Successfully deposited ${amount} ${asset} with ${strategy} strategy!<br>
+                    <a href="#" style="color:inherit;">
+                        View transaction
+                    </a>`,
+                    'success'
+                );
+                
+                // Reset form
+                document.getElementById('amount').value = '';
+            }
+            
+        } catch (error) {
+            console.error('Deposit error:', error);
+            showNotification(`Transaction failed: ${error.message}`, 'error');
+        }
+    }
+    
+    // Show notification
+    function showNotification(message, type) {
+        // Get deposit form
+        const depositForm = document.querySelector('.deposit-form');
+        
+        // Remove existing notification
+        const existingNotification = document.querySelector('.deposit-notification');
+        if (existingNotification) existingNotification.remove();
+        
+        // Create notification
+        const notification = document.createElement('div');
+        notification.className = `deposit-notification deposit-${type}`;
+        notification.innerHTML = message;
+        
+        // Add to form
+        depositForm.appendChild(notification);
+        
+        // Auto hide after delay (except loading)
+        if (type !== 'loading') {
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                setTimeout(() => notification.remove(), 300);
+            }, 10000);
+        }
+    }
     </script>
 </body>
+</html>
 </html>
