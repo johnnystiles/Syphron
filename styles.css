@@ -1,3 +1,302 @@
+/* Token Minting Page Styles */
+.mint-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+@media (max-width: 768px) {
+    .mint-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+.token-card {
+    background-color: rgba(2, 48, 32, 0.7);
+    border: 1px solid var(--neon-green);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 255, 128, 0.2);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.token-header {
+    background: linear-gradient(90deg, var(--darker-green), rgba(0, 255, 128, 0.2));
+    padding: 20px;
+    border-bottom: 1px solid var(--neon-green);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.token-symbol {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--neon-yellow);
+    font-family: var(--font-mono);
+    text-shadow: 0 0 10px var(--neon-yellow);
+}
+
+.token-name {
+    font-size: 1.2rem;
+    color: var(--text-color);
+}
+
+.token-details {
+    padding: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.token-address, .token-exchange {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.token-address .label, .token-exchange .label {
+    color: var(--neon-green);
+    font-size: 0.9rem;
+    font-family: var(--font-mono);
+}
+
+.token-address .value {
+    font-family: var(--font-mono);
+    word-break: break-all;
+    color: var(--text-color);
+    font-size: 0.9rem;
+}
+
+.token-exchange .value {
+    color: var(--neon-yellow);
+    font-family: var(--font-mono);
+    font-size: 1.1rem;
+}
+
+.token-description {
+    line-height: 1.6;
+    margin-top: 20px;
+}
+
+.mint-form {
+    background-color: rgba(2, 48, 32, 0.7);
+    border: 1px solid var(--neon-green);
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 0 20px rgba(0, 255, 128, 0.2);
+}
+
+.exchange-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: rgba(1, 26, 18, 0.8);
+    border-radius: 5px;
+    border: 1px solid rgba(0, 255, 128, 0.2);
+}
+
+#usdc-amount, #syph-amount {
+    color: var(--neon-yellow);
+    font-family: var(--font-mono);
+}
+
+.token-vault {
+    margin-top: 20px;
+    padding: 10px;
+    border-top: 1px solid rgba(0, 255, 128, 0.2);
+    font-size: 0.8rem;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.token-vault .label {
+    color: var(--neon-green);
+}
+
+.token-vault .value {
+    font-family: var(--font-mono);
+    word-break: break-all;
+    color: var(--text-color);
+}
+
+.app-link {
+    color: var(--neon-yellow);
+    text-decoration: none;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    position: relative;
+    padding: 8px 12px;
+    transition: all 0.3s ease;
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    font-weight: 500;
+    border: 1px solid var(--neon-yellow);
+    border-radius: 4px;
+    margin-left: 10px;
+}
+
+.app-link:hover {
+    background-color: rgba(212, 255, 0, 0.1);
+    box-shadow: 0 0 10px rgba(212, 255, 0, 0.3);
+}
+
+.notification {
+    padding: 12px;
+    margin-top: 15px;
+    border-radius: 5px;
+    text-align: center;
+    display: none;
+}
+
+.notification.success {
+    background-color: rgba(0, 255, 128, 0.2);
+    border: 1px solid var(--neon-green);
+    color: var(--neon-green);
+}
+
+.notification.error {
+    background-color: rgba(255, 51, 102, 0.2);
+    border: 1px solid #ff3366;
+    color: #ff6688;
+}
+
+.notification.loading {
+    background-color: rgba(212, 255, 0, 0.2);
+    border: 1px solid var(--neon-yellow);
+    color: var(--neon-yellow);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.notification-spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--neon-yellow);
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spinner 1s linear infinite;
+    display: inline-block;
+}
+
+@keyframes spinner {
+    to { transform: rotate(360deg); }
+}
+
+.wallet-info {
+    margin-top: 15px;
+    padding: 10px;
+    background-color: rgba(2, 48, 32, 0.7);
+    border: 1px solid var(--neon-green);
+    border-radius: 5px;
+    display: none;
+}
+
+.wallet-address {
+    color: var(--neon-yellow);
+    font-family: var(--font-mono);
+    letter-spacing: 1px;
+}
+
+.wallet-network {
+    font-size: 0.8rem;
+    margin-top: 5px;
+}
+
+.wallet-tokens {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(0, 255, 128, 0.2);
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.wallet-token-balance {
+    display: flex;
+    justify-content: space-between;
+}
+
+.wallet-token-name {
+    color: var(--neon-green);
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+}
+
+.wallet-token-amount {
+    color: var(--neon-yellow);
+    font-family: var(--font-mono);
+}
+
+.wallet-disconnect {
+    background: none;
+    border: none;
+    color: var(--neon-green);
+    padding: 0;
+    margin-top: 8px;
+    cursor: pointer;
+    text-decoration: underline;
+    font-size: 0.9rem;
+    font-family: var(--font-main);
+}
+
+.wallet-disconnect:hover {
+    color: var(--neon-yellow);
+}
+
+/* Adjust the btn class for connected state */
+.btn.connected {
+    background: var(--neon-green);
+    color: var(--darker-green);
+}
+
+/* Disable button styling */
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background: linear-gradient(90deg, #2a5a46, #748853);
+}
+
+.btn:disabled:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+/* For token input with max button */
+.input-with-max {
+    position: relative;
+}
+
+.max-button {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(212, 255, 0, 0.2);
+    border: 1px solid var(--neon-yellow);
+    color: var(--neon-yellow);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.max-button:hover {
+    background: var(--neon-yellow);
+    color: var(--darker-green);
+}
 :root {
     --neon-yellow: #d4ff00;
     --neon-yellow-dim: #91aa00;
