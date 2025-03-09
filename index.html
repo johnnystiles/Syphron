@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="styles.css">
     <!-- Add Web3 library -->
     <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js" type="application/javascript"></script>
+    <!-- Google Fonts for Techno Look -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Rajdhani:wght@300;400;500;600&family=Share+Tech+Mono&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
@@ -17,8 +19,8 @@
             <div class="nav-links">
                 <a href="#" class="nav-link" data-tab="home">Home</a>
                 <a href="#" class="nav-link" data-tab="whitepaper">Whitepaper</a>
-                <a href="#" class="nav-link" data-tab="deposit">Deposit</a>
                 <a href="#" class="nav-link" data-tab="about">About</a>
+                <a href="https://app.syphron.com" class="app-link">Launch App</a>
             </div>
         </nav>
     </header>
@@ -36,9 +38,10 @@
             <h1>SYPHRON</h1>
             <p>The next generation DeFi AI autonomous agent. Leveraging cutting-edge technology to maximize your yield through intelligent, adaptive strategies.</p>
             <div>
-                <button class="btn" id="depositBtn">Start Investing</button>
                 <button class="btn" id="whitepaperBtn">Read Whitepaper</button>
+                <button class="btn" id="aboutBtn">Learn More</button>
             </div>
+            <a href="https://app.syphron.com" class="launch-app-btn">Launch App</a>
         </section>
     </div>
     
@@ -317,45 +320,39 @@
     </footer>
     
     <script src="web3-utils.js"></script>
-    <script src="wallet.js"></script>
-    <script src="deposit.js"></script>
-    <script src="script.js"></script>
     <script>
-    // Simple wallet integration with direct MetaMask connection
+    // Simple website navigation
     document.addEventListener('DOMContentLoaded', function() {
-        // Main wallet connect button
-        const walletBtn = document.getElementById('wallet');
-        if (walletBtn) {
-            walletBtn.addEventListener('click', connectMetaMask);
-        }
-        
-        // Main deposit button 
-        const depositButton = document.querySelector('.deposit-form .btn:last-child');
-        if (depositButton) {
-            depositButton.addEventListener('click', handleDeposit);
-        }
-        
-        // Navigation buttons
-        const depositBtn = document.getElementById('depositBtn');
-        const whitepaperBtn = document.getElementById('whitepaperBtn');
-        
-        if (depositBtn) {
-            depositBtn.addEventListener('click', function() {
-                changeTab('deposit');
+        // Tab navigation
+        const navLinks = document.querySelectorAll('.nav-link');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const tabId = this.getAttribute('data-tab');
+                changeTab(tabId);
             });
-        }
+        });
         
+        // Button navigation
+        const whitepaperBtn = document.getElementById('whitepaperBtn');
         if (whitepaperBtn) {
             whitepaperBtn.addEventListener('click', function() {
                 changeTab('whitepaper');
             });
         }
         
-        // Check if already connected
-        checkConnection();
+        const aboutBtn = document.getElementById('aboutBtn');
+        if (aboutBtn) {
+            aboutBtn.addEventListener('click', function() {
+                changeTab('about');
+            });
+        }
+        
+        // Create digital rain effect
+        createDigitalRain();
     });
     
-    // Simple tab navigation
+    // Change tab function
     function changeTab(tabId) {
         const tabs = document.querySelectorAll('.tab-content');
         tabs.forEach(tab => {
@@ -375,173 +372,50 @@
         });
     }
     
-    // Connect to MetaMask
-    async function connectMetaMask() {
-        // Check if MetaMask is installed
-        if (typeof window.ethereum === 'undefined') {
-            alert('MetaMask is not installed. Please install MetaMask to connect your wallet.');
-            return;
-        }
+    // Digital rain effect
+    function createDigitalRain() {
+        const container = document.getElementById('digitalRain');
+        if (!container) return;
         
-        const walletBtn = document.getElementById('wallet');
+        const containerWidth = window.innerWidth;
         
-        try {
-            // Show connecting state
-            walletBtn.innerHTML = 'Connecting...';
+        // Clear existing rain
+        container.innerHTML = '';
+        
+        const columns = Math.floor(containerWidth / 20);
+        
+        for (let i = 0; i < columns; i++) {
+            const column = document.createElement('div');
+            column.classList.add('rain-column');
+            column.style.left = `${i * 20 + Math.random() * 10}px`;
             
-            // Request accounts
-            const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
-            const account = accounts[0];
+            const characters = generateRandomCharacters(20);
+            column.textContent = characters;
             
-            // Get network
-            const chainId = await ethereum.request({ method: 'eth_chainId' });
-            const networkName = getNetworkName(chainId);
+            const duration = 10 + Math.random() * 20;
+            column.style.animationDuration = `${duration}s`;
             
-            // Update UI
-            walletBtn.innerHTML = 'Wallet Connected';
-            walletBtn.classList.add('connected');
+            const delay = Math.random() * 20;
+            column.style.animationDelay = `${delay}s`;
             
-            // Create wallet info
-            showWalletInfo(account, networkName);
-            
-            // Enable deposit button
-            const depositButton = document.querySelector('.deposit-form .btn:last-child');
-            if (depositButton) {
-                depositButton.disabled = false;
-                depositButton.innerHTML = 'Deposit';
-            }
-            
-            // Add event listeners
-            ethereum.on('accountsChanged', handleAccountsChanged);
-            ethereum.on('chainChanged', handleChainChanged);
-            
-            // Show asset balance if on deposit page
-            if (document.getElementById('deposit').classList.contains('active-tab')) {
-                addBalanceDisplay(account);
-            }
-            
-            console.log(`Connected with: ${account} on ${networkName}`);
-            return account;
-            
-        } catch (error) {
-            console.error('Connection error:', error);
-            walletBtn.innerHTML = 'Connect Wallet';
-            alert(`Failed to connect: ${error.message}`);
+            container.appendChild(column);
         }
     }
     
-    // Check if already connected
-    async function checkConnection() {
-        if (typeof window.ethereum === 'undefined') return;
-        
-        try {
-            // Get accounts without prompting
-            const accounts = await ethereum.request({ method: 'eth_accounts' });
-            if (accounts.length > 0) {
-                const chainId = await ethereum.request({ method: 'eth_chainId' });
-                const networkName = getNetworkName(chainId);
-                
-                // Update UI
-                const walletBtn = document.getElementById('wallet');
-                if (walletBtn) {
-                    walletBtn.innerHTML = 'Wallet Connected';
-                    walletBtn.classList.add('connected');
-                }
-                
-                // Show wallet info
-                showWalletInfo(accounts[0], networkName);
-                
-                // Enable deposit button
-                const depositButton = document.querySelector('.deposit-form .btn:last-child');
-                if (depositButton) {
-                    depositButton.disabled = false;
-                    depositButton.innerHTML = 'Deposit';
-                }
-                
-                // Add event listeners
-                ethereum.on('accountsChanged', handleAccountsChanged);
-                ethereum.on('chainChanged', handleChainChanged);
-                
-                // Show asset balance if on deposit page
-                if (document.getElementById('deposit').classList.contains('active-tab')) {
-                    addBalanceDisplay(accounts[0]);
-                }
-            }
-        } catch (error) {
-            console.error('Error checking connection:', error);
+    function generateRandomCharacters(length) {
+        const charset = "01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワン";
+        let result = "";
+        for (let i = 0; i < length; i++) {
+            result += charset.charAt(Math.floor(Math.random() * charset.length));
         }
+        return result;
     }
     
-    // Get network name
-    function getNetworkName(chainId) {
-        const networks = {
-            '0x1': 'Ethereum Mainnet',
-            '0x5': 'Goerli Testnet',
-            '0x89': 'Polygon',
-            '0x38': 'Binance Smart Chain',
-            '0xa86a': 'Avalanche',
-            '0xa4b1': 'Arbitrum One'
-        };
-        
-        return networks[chainId] || `Chain ID: ${chainId}`;
-    }
-    
-    // Handle account changes
-    function handleAccountsChanged(accounts) {
-        if (accounts.length === 0) {
-            // User disconnected
-            const walletBtn = document.getElementById('wallet');
-            if (walletBtn) {
-                walletBtn.innerHTML = 'Connect Wallet';
-                walletBtn.classList.remove('connected');
-            }
-            
-            // Hide wallet info
-            const walletInfo = document.getElementById('walletInfo');
-            if (walletInfo) walletInfo.remove();
-            
-            // Disable deposit button
-            const depositButton = document.querySelector('.deposit-form .btn:last-child');
-            if (depositButton) {
-                depositButton.disabled = true;
-                depositButton.innerHTML = 'Connect Wallet First';
-            }
-            
-            console.log('Wallet disconnected');
-        } else {
-            // Account changed
-            ethereum.request({ method: 'eth_chainId' }).then(chainId => {
-                showWalletInfo(accounts[0], getNetworkName(chainId));
-                
-                // Update balance display if on deposit page
-                if (document.getElementById('deposit').classList.contains('active-tab')) {
-                    addBalanceDisplay(accounts[0]);
-                }
-            });
-        }
-    }
-    
-    // Handle chain changes
-    function handleChainChanged(chainId) {
-        // Get current account
-        ethereum.request({ method: 'eth_accounts' }).then(accounts => {
-            if (accounts.length > 0) {
-                showWalletInfo(accounts[0], getNetworkName(chainId));
-                
-                // Update balance display if on deposit page
-                if (document.getElementById('deposit').classList.contains('active-tab')) {
-                    addBalanceDisplay(accounts[0]);
-                }
-            }
-        });
-        
-        console.log(`Chain changed to: ${getNetworkName(chainId)}`);
-    }
-    
-    // Show wallet info
-    function showWalletInfo(account, networkName) {
-        // Remove existing wallet info
-        const existingWalletInfo = document.getElementById('walletInfo');
+    // Handle window resizing
+    window.addEventListener('resize', createDigitalRain);
+    </script>
+</body>
+</html>WalletInfo = document.getElementById('walletInfo');
         if (existingWalletInfo) existingWalletInfo.remove();
         
         // Create wallet info element
