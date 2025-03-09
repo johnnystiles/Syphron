@@ -158,5 +158,32 @@
     </footer>
     
     <script src="script.js"></script>
+    <!-- Add descriptive titles to each section -->
+    <script>
+        // Make sure DOM is loaded before executing this code
+        document.addEventListener('DOMContentLoaded', function() {
+            // Remove any existing onclick attributes to prevent conflicts with event listeners
+            document.querySelectorAll('.btn').forEach(button => {
+                if (button.hasAttribute('onclick')) {
+                    button.removeAttribute('onclick');
+                }
+            });
+            
+            // Add event listeners to the specific buttons on the home page
+            const depositBtn = document.querySelector('.hero .btn:first-child');
+            if (depositBtn) {
+                depositBtn.addEventListener('click', function() {
+                    changeTab('deposit');
+                });
+            }
+            
+            const whitepaperBtn = document.querySelector('.hero .btn:last-child');
+            if (whitepaperBtn) {
+                whitepaperBtn.addEventListener('click', function() {
+                    changeTab('whitepaper');
+                });
+            }
+        });
+    </script>
 </body>
 </html>
